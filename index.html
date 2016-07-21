@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+<style>
+@keyframes example {
+    0% {
+        transform: scale(0) translateX(-400px) rotateY(90deg) skewY(15deg);
+    }
+    100% {
+        transform: scale(1) translateX(0px) rotateY(0) skewY(0);
+    }
+}
+@keyframes reverse {
+    0% {
+        transform: scale(1);
+    }
+    100% {
+        transform: scale(0);
+    }
+}
+.emoji-block {
+    position: relative;
+    display: inline-block;
+}
+.emoji-menu {
+    transform: scale(0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 180px;
+    transition: all .4s;
+}
+.emoji-menu.on {
+    animation-name: example;
+    animation-duration: .4s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+.emoji-menu.off {
+    animation-name: reverse;
+    animation-duration: .2s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+.emoji-cur,
+.emoji-menu {
+	z-index: 999;
+	box-sizing: border-box;
+}
+.emoji-cur > div,
+.emoji-menu > div {
+    display: inline-block;
+    max-height: 200px;
+    background: #fff;
+    overflow: hidden;
+    box-sizing: border-box;
+    border-radius: 3px;
+}
+.emoji-menu > div {
+	box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+}
+.emoji-cur img,
+.emoji-menu img {
+	width: 25px;
+	height: 25px;
+	vertical-align: middle;
+	border: 0 none;
+}
+.emoji-cur a,
+.emoji-menu a {
+	margin: -1px 0 0 -1px;
+	border: 1px solid #f2f2f2;
+	padding: 5px;
+	display: block;
+	float: left;
+}
+.emoji-cur a:hover,
+.emoji-menu a:hover {
+	background-color: #fffae7;
+}
+.emoji-cur:after,
+.emoji-menu:after {
+	content: ' ';
+	display: block;
+	clear: left;
+}
+.emoji-cur a {
+    width: 25px;
+    height: 25px;
+    background-size: 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.emoji-cur a[data-id="1"] {
+    background-image: url(./emoji/smile.png);
+}
+.emoji-cur a[data-id="2"] {
+    background-image: url(./emoji/angry.png);
+}
+.emoji-cur a[data-id="3"] {
+    background-image: url(./emoji/flushed.png);
+}
+.emoji-cur a[data-id="4"] {
+    background-image: url(./emoji/neckbeard.png);
+}
+.emoji-cur a[data-id="5"] {
+    background-image: url(./emoji/laughing.png);
+}
+.emoji-block * {
+   -moz-user-select: none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+</style>
+
+<div class="emoji-block">
+    <div class="emoji-cur">
+        <div>
+            <a href="javascript:void(0)" data-id="2"></a>
+        </div>
+    </div>
+
+    <div class="emoji-menu">
+        <div>
+            <a href="javascript:void(0)" data-id="1" title="Smile">
+                <img src="emoji/smile.png" alt="Smile">
+            </a>
+
+            <a href="javascript:void(0)" data-id="2" title="Angry">
+                <img src="emoji/angry.png" alt="Angry">
+            </a>
+
+            <a href="javascript:void(0)" data-id="3" title="Flushed">
+                <img src="emoji/flushed.png" alt="Flushed">
+            </a>
+
+            <a href="javascript:void(0)" data-id="4" title="Neckbeard">
+                <img src="emoji/neckbeard.png" alt="Neckbeard">
+            </a>
+
+            <a href="javascript:void(0)" data-id="5" title="Laughing">
+                <img src="emoji/laughing.png" alt="Laughing">
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var emojiMenu = document.querySelector('.emoji-menu');
+    var emojiCur = document.querySelector('.emoji-cur');
+    var emojiCurImage = document.querySelector('a');
+    var emojiArr = emojiMenu.querySelectorAll('a');
+
+    emojiCur.addEventListener('click', showEmojiMenu);
+
+    addEventClickToEmoji();
+
+    // function's
+    function addEventClickToEmoji() {
+        Object.keys(emojiArr).map(function(i) {
+            emojiArr[i].addEventListener('click', function() {
+                var curId = this.dataset.id;
+                emojiCurImage.dataset.id = curId;
+                hideEmojiMenu();
+            });
+        });
+    }
+
+    function showEmojiMenu() {
+        emojiMenu.classList.add('on');
+        emojiMenu.classList.remove('off');
+    }
+
+    function hideEmojiMenu() {
+        emojiMenu.classList.add('off');
+        emojiMenu.classList.remove('on');
+    }
+</script>
+
+</body>
+</html>
