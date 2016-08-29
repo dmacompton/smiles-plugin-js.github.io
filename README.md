@@ -2,3 +2,4 @@
 smiles-plugin-js.github.io
 
 
+(emoji.gif)
